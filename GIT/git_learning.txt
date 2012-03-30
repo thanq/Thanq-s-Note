@@ -1,0 +1,14 @@
+$work : 工作目录
+
+git add . : take a snapshot  生成的快照并存入 索引 , 
+git commit -m  "简短的版本变化信息": 
+git commit   : 提交  索引内容将放入仓库  , 将提示输入版本信息
+
+
+## Self-introduction 
+git config--global user.name "thanq"
+git config--global user.email qinqiangqiang@corejava.info 
+
+## Document ignore // 文档忽略
+echo temp > .gitignore
+

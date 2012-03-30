@@ -1,0 +1,27 @@
+﻿  import com.caucho.hessian.client.HessianProxyFactory;
+ 
+
+ public void doSave()
+	{
+		MyTestService service = (MyTestService) ServiceFactory.findBean("myTestService");
+		MY_TEST_VO vo=new MY_TEST_VO();
+		vo.setId("2");
+		vo.setName("lichunyang");
+		vo.setSex("1");
+		vo.setMobile("18611565309");
+		vo.setAddress("matou");
+		service.saveOrUpdateObjectEntity(vo);
+	}
+	  //系统测试
+	public static void main(String [] args){
+		
+		HessianProxyFactory factory = new HessianProxyFactory();
+		try
+		{
+			TestAction action = (TestAction) factory.create(TestAction.class,
+					"http://192.168.2.149:8080/TJSC/testAction");	
+			action.doSave();
+			
+		
+		}catch (Exception e) 
+		

@@ -1,0 +1,45 @@
+﻿Life is sort so why wase it doing something dumb ? 
+
+Spring：
+ž   事物有几种方式，隔离级别，传播属性
+ž   Spring优缺点等
+ 
+Struts2：
+ž   和spring的整合
+ž   常用标记
+ž   Excel 导出如何实现  // stream 的问题
+ 
+Hibernate：
+ž   Hibernate 工作流程 // 
+ž   Session中load(按需加载),get方法的区别
+ž   Session 中常用的几个方法
+ž   说说缓存
+ž   Hibernate 优化
+ 
+MyBatis：
+ž   优缺点 -- 
+ž   # 和 $ 的区别 -- 
+ž   和hibernate对比 --
+ž   和 spring 的整合 --
+
+事务控制肿么办
+
+PV 源语 标示 ...
+ 
+ 
+ 
+框架以外的
+ž   Java 常用通信手段，
+// 线程间通信 , socket , jndi 
+ webservice，soap，hessian，json，xml，socket
+ž   易宝常用的：hessian，xml，json
+ž   HTTP协议常见的问题，温习一下
+ž   DB2了解
+ž   数据库优化话题等
+
+数据库:
+存储过程 plsql 
+触发器，视图，游标，临时表、表变量、单索引、组合索引、聚集索引、非聚集索引、主从库、库引擎考了一圈后，开始问我B树和B+树的实现，区别，查找和写入时间复杂度
+
+
+

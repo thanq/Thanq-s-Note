@@ -1,0 +1,138 @@
+﻿component : 部件, 组件z  // xtype //Ext.getCmp( mix );
+regular : 符合规定的, 有规律的, 正则 
+region : 地区, 地方 , 区域
+accordion : 手风琴
+render: 报答, 呈现
+record : 记录 	
+confirm : 证实,确认
+parameter : 参数
+collapsible :可折叠
+draggable / / drag拖动
+monitor: 监控        
+valid : 有效地       
+constrain: 强制:     
+modal:形式           
+realign : 重新调整   
+spearator: 离析器, 隔离物
+remote : 远离 , 远程 
+force : 力, 效力
+restrict: 限制 , 控制
+underlying: 根本的
+increase : 增长,增加
+invoke : 调用,呼吁
+signer :签名  / signature 签名,签字
+declared : 公告的, 公然的 
+parameter : 参数 
+actual : 实际存在的 
+Override : override : 不顾 , 使无效,  压倒的
+generate  :  引发(某情感) ,造成 (某情况) , 产生(能量,电力) ,(语言学)生成
+warn : 警告 
+assignment :(分派的)任务
+assignee :代理人,受托人 
+effort : 努力 / 成绩 
+retention : 保留 , 保持 , 记忆 
+observe : 观察到,<!--  --> 监视 
+hessian : 粗麻布 // hessian 
+agency : 代理  , 机构 
+attachment : 附属物 , 附件 
+visual : 视觉的 , 可见的 , 直观的  // jps  -> visualgc 
+attach: 附上 , 贴上
+dispatch : 调度,分发 
+patch :斑点, 小块, 补丁, 临时 
+require: 需要, 依赖 
+metric : 公制的 , 度量 
+transfer : 调用, 转移 ,迁移 
+issue : 放出
+brief  : adj : 简洁,短暂的 ;  n : 摘要 ,概括 
+makeup : 结构 , 组成  
+series :  n : 系列  , 串联的 
+gain : 获得    gain in : 增加 , 增长 ; 
+tail: n:尾巴, 尾随  vt : 跟踪 
+
+	3．delighting in your company.
+　　＝Very glad and happy in your company．
+　　有你在身边多高兴。
+　　company（集合名词）：伙伴，朋友，同行的人。
+４．If you intend to be this way.
+　　如若你一定要这样。
+　　intend（及物动词）：有意，打算，想造成
+　　intend to do＝intend doing打算。
+　　例：He intended to have bought the new car．
+　　　　他本打算买部新汽车，但却没有买。
+　　intend to + 完成式的不定式表示企图未能实现的情况。
+
+
+vt.
+　1. 想要;打算[+to-v][+v-ing][+(that)][O2]
+　　He intends his son to manage the company.
+　　他打算让他儿子经营该公司。
+　　I intend studying abroad.
+　　我打算出国留学。
+　　I intend to study abroad.
+
+
+
+
+
+
+
+
+
+
+
+
+customer : 客户
+report ： 报告 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+$(document).keydown(
+function(e){
+alert(e);
+}
+
+);
+
+
+
+prepare  :准备 , 预备 
+dispatcher : 派遣 
+container :　容器 
+contain : 包含 ,容纳 
+process : 队列运行 , 处理  	
+agenda 议程
+authoring :  著作 
+authorization : 授权   grant :准许 , 
+authorization grant : 中间凭证
+credential : 证书 证件 文凭 
+authentic : adj  真的  可信的
+authentication : 验证 
+exchange : 交换 , 互换 
+implicit : 不言而明的  ; 不声明的  ; 
+pause : 暂停 
+月相显示  
+nutz 
+
+
+
+　　我打算出国留学。
+　　Let's ask her what she intends us to do.
+　　让我们问她要我们做什么。
+　　What do you intend to do today?
+　　你今天打算做什么?
+　2. 打算使...(成为);(为...而)准备[H][(+for/as)][O2]
+　　That trap is intended for you.
+　　那个圈套是为你而设的。
+　3. 意指,意思是

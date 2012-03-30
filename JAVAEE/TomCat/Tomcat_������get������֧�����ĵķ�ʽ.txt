@@ -1,0 +1,8 @@
+﻿Tomcat : 
+	让get请求支持中文:
+	    <Connector port="8080" URIEncoding="UTF-8"  />
+		4.对于请求，可以使用过滤器或者在每个JSP/Servlet中设置 request.setCharacterEncoding(“UTF-8″)。 同时，要修改Tomcat的默认配置，推荐将useBodyEncodingForURI参数设置为true，也可以将URIEncoding参数设置为 UTF-8（有可能影响其他应用，所以不推荐）。
+		
+		or 
+		paramValue = new String(paramValue.getBytes(“ISO8859_1″), “UTF-8″);
+		

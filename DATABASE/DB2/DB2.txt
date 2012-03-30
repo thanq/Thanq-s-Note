@@ -1,0 +1,25 @@
+﻿DB2:
+	导出数据：
+	db2move dbname export -sn test -u db2inst1 -p password
+	导入数据：
+	db2move dbname import -u db2inst1 -p password
+	
+	
+	// 取得前几行 :    order by "MENU_ID"  fetch first 2 rows only ;
+
+
+// 查询 系统表 :   某表的条目数 
+select card from SYSIBM.SYSTABLES where name='CBEB_U_DOC_COMMENT' 
+
+如果要更换导入数据的schema，只要将db2move.lst文件中的test替换成你要导入的schema，schema名称要大写。
+
+通过这个命令可以在同一个数据库内复制相同的schema内容（只有表格），用两个schema模拟两个数据库。
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,38 @@
+Ext.util.Observable:一个抽象基类，为事件机制的管理提供一个公共接口,如果你希望的类可以有事件，就继承它吧
+Ext.apply:如果只传入两个参数，则将C继承D的所有方法属性，如果定义了B则每次都先继承B的方法属性然后再继承D的方法属性，即B是默认继承对象 
+
+
+
+Ext.namespace(String namespace1,String namespace2 ,String etc ) :void 
+为变量创建命名空间 , 这样就可以通过命名空间找的类 : eg: Ext.Dog.eat();
+
+Ext.apply(Object obj , Object config  , Object default) :Object  // apply  : 应用, 申请, 请求
+//obj 将 继承 config 的方法 ,属性 
+复制 config 对象的所有属性到 obj  // default 对象: 如果该参数存在, obj 会先获得哪些 default 里的东东;
+然后获得 config 里的东东 ; default 用于定义一些默认值 
+
+Ext.applyIf(Object obj , Object config) :Object 
+// 只把 config 中存在 ,而 obj 中不存在的值赋过去, 就是不覆盖 obj 原来属性的值 
+
+Ext.id(Mixed el,  String pre) : String   // 返回一个唯一的id值 ? Ext.id(this)-------
+// 如果需要为元素设定一个唯一的id 值 并返回 id : Ext.id( id | DOM对象 | Ext的Element对象)
+//如果需要指定特定的前缀 : Ext.id(Mix , "myPre") // 默认前缀为: ext-gen 
+
+Ext.extend(Object subClass , Object supperClass , [Object overrides ]):void 
+//实现对象继承
+
+Ext.each(Array/NodeList/Mixed Array , Function fn , Object scope ) //scope :范围, 领域
+使用函数 fn 对 传入数组进行迭代, 直道 fn 返回 false ;  
+
+
+
+
+
+
+
+extLoad.js 
+extLoad.{ext|user}.config.js
+
+user/util.js
+user/init.js 
+/user/view/init.jsp

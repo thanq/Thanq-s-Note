@@ -1,0 +1,6 @@
+set cookie domain :
+Secure 属性:访问是只允许通过https进行操作 // 与https连接配合操作 , 不能光https cookie不设Secure属性
+HttpOnly 属性:该cookie 只可以被http请求操作 , js脚本无法读写
+eg:
+Set-Cookie:
+name=123456;Domain=mail.corejava.info;Path=/mail;Secure;HttpOnly

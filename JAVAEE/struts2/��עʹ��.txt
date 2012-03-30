@@ -1,0 +1,148 @@
+还是已登录来说明下这个Action的配置，这里要说的Action的配置不是在src/struts.xml中，而是用注解方式来进行配置的
+
+前提是除了基本的那六个jar包之外，还需要一个struts-2.1.8.1\lib\struts2-convention-plugin-2.1.8.1.jar
+
+不过struts.xml还是要有的
+
+具体示例
+
+Login.jsp
+
+    <span style="font-size: large;"><%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>  
+    <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">  
+    <html>  
+      <head>  
+        <title>Struts2登录验证</title>  
+        <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">  
+        <meta http-equiv="description" content="This is my page">  
+        <!--  
+        <link rel="stylesheet" type="text/css" href="styles.css">  
+        -->  
+      </head>  
+        
+      <body>  
+      <h3>Struts2登录</h3><hr/>  
+        <form action="${pageContext.request.contextPath}/user/login.qqi" method="post">  
+            <table border="1" width="500px">  
+                <tr>  
+                    <td>用户名</td>  
+                    <td><input type="text" name="loginname"/></td>  
+                </tr>  
+                <tr>  
+                    <td>密码</td>  
+                    <td><input type="password" name="pwd"/></td>  
+                </tr>  
+                <tr>  
+                    <td colspan="2"><input type="submit" value="登录"/></td>  
+                </tr>  
+            </table>  
+        </form>  
+      </body>  
+    </html></span>  
+
+ src/struts.xml
+
+    <span style="font-size: large;"><?xml version="1.0" encoding="UTF-8" ?>  
+    <!DOCTYPE struts PUBLIC  
+        "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"  
+        "http://struts.apache.org/dtds/struts-2.1.7.dtd">  
+      
+    <struts>  
+        <!-- 请求参数的编码方式 -->  
+        <constant name="struts.i18n.encoding" value="UTF-8"/>  
+        <!-- 指定被struts2处理的请求后缀类型。多个用逗号隔开 -->  
+        <constant name="struts.action.extension" value="action,do,go,qqi"/>  
+        <!-- 当struts.xml改动后，是否重新加载。默认值为false(生产环境下使用),开发阶段最好打开  -->  
+        <constant name="struts.configuration.xml.reload" value="true"/>  
+        <!-- 是否使用struts的开发模式。开发模式会有更多的调试信息。默认值为false(生产环境下使用),开发阶段最好打开  -->  
+        <constant name="struts.devMode" value="false"/>  
+        <!-- 设置浏览器是否缓存静态内容。默认值为true(生产环境下使用),开发阶段最好关闭  -->  
+        <constant name="struts.serve.static.browserCache" value="false" />  
+        <!-- 指定由spring负责action对象的创建   
+        <constant name="struts.objectFactory" value="spring" />  
+        -->  
+        <!-- 是否开启动态方法调用 -->  
+        <constant name="struts.enable.DynamicMethodInvocation" value="false"/>  
+    </struts></span>  
+
+ LoginAction.java
+
+    <span style="font-size: large;">package com.javacrazyer.web.action;  
+      
+    import org.apache.struts2.convention.annotation.Action;  
+    import org.apache.struts2.convention.annotation.ExceptionMapping;  
+    import org.apache.struts2.convention.annotation.ExceptionMappings;  
+    import org.apache.struts2.convention.annotation.Namespace;  
+    import org.apache.struts2.convention.annotation.ParentPackage;  
+    import org.apache.struts2.convention.annotation.Result;  
+    import org.apache.struts2.convention.annotation.Results;  
+      
+    import com.opensymphony.xwork2.ActionSupport;  
+      
+    /**
+     * 使用注解来配置Action
+     *  
+     */  
+    @ParentPackage("struts-default")  
+    // 父包  
+    @Namespace("/user")  
+    @Results( { @Result(name = "success", location = "/msg.jsp"),  
+            @Result(name = "error", location = "/error.jsp") })  
+    @ExceptionMappings( { @ExceptionMapping(exception = "java.lange.RuntimeException", result = "error") })  
+    public class LoginAction extends ActionSupport {  
+        private static final long serialVersionUID = -2554018432709689579L;  
+        private String loginname;  
+        private String pwd;  
+      
+        @Action(value = "login")  
+        public String login() throws Exception {  
+      
+            if ("qq".equals(loginname) && "123".equals(pwd)) {  
+                return SUCCESS;  
+            } else {  
+                return ERROR;  
+            }  
+        }  
+      
+        @Action(value = "add", results = { @Result(name = "success", location = "/index.jsp") })  
+        public String add() throws Exception {  
+            return SUCCESS;  
+        }  
+      
+        public String getLoginname() {  
+            return loginname;  
+        }  
+      
+        public void setLoginname(String loginname) {  
+            this.loginname = loginname;  
+        }  
+      
+        public String getPwd() {  
+            return pwd;  
+        }  
+      
+        public void setPwd(String pwd) {  
+            this.pwd = pwd;  
+        }  
+      
+    }</span> 
+
+success.jsp和error.jsp我就不贴出来了
+
+注解配置的解释
+
+  1) @ParentPackage 指定父包
+
+  2) @Namespace 指定命名空间
+
+  3) @Results 一组结果的数组
+
+  4) @Result(name="success",location="/msg.jsp") 一个结果的映射
+
+  5) @Action(value="login") 指定某个请求处理方法的请求URL。注意，它不能添加在Action类上，要添加到方法上。
+
+  6) @ExceptionMappings 一级声明异常的数组
+
+  7) @ExceptionMapping 映射一个声明异常
+
+由于这种方式不是很常用，所以大家只做了解即可

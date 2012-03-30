@@ -1,0 +1,29 @@
+﻿    <html>  
+     <head>  
+	 <link rel="stylesheet" type="text/css" href="style.css" media="all" />
+      <script type="application/x-javascript">  
+        function draw() {  
+          var canvas = document.getElementById("canvas");  
+          if (canvas.getContext) {  
+            var ctx = canvas.getContext("2d");  
+      
+            ctx.fillStyle = "rgb(200,0,0)";  
+            ctx.fillRect (10, 10, 55, 50);  
+      
+            ctx.fillStyle = "rgba(0, 0, 200, 0.5)";  
+            ctx.fillRect (30, 30, 55, 50);  
+          }  
+        }  
+      </script>  
+     </head>  
+     <body onload="draw();">  
+		<div class="note">
+		<p>canvas  帆布 , (油)画布</p>
+		<p>fill (vt)使充满, 填满  (n)充分</p>
+		<p>rect  // 正 , 直 , 直的 </p>
+		<p>angle (n) 角度 角落 , (vt 及物动词)把...放成-角度 使有倾向性,(vi 不及物)钓鱼 ,(以..的角度)报到</p>
+		<p>rectangle   长方形 矩形 </p>
+		</div>
+       <canvas id="canvas" width="150" height="150"></canvas>  
+     </body>  
+    </html>  

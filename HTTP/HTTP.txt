@@ -1,0 +1,54 @@
+http messages are simple , line-oriented sequences of characters  ; 
+HTTP messages consist of three parts : 
+	Start Line :
+	The fists line of the messages is the start line , indicting what to do for a request  or what happened for a response 
+	
+	Header Fields :
+	Zero or more header fields follow the start line .Each header fields consists of a name and a value ;
+	separated by a colon (:) for easy parsing ; the header end with a blank line 
+	
+	body :
+	After the blank line is an optional messages body containing any kind of date (binary date ...)
+	
+	accept : 接受
+	
+	Transmission Control Protocol  : TCP 
+	HTTP is an application layer protocol ; 
+	
+	establishes a TCP connection ; ->request ; <-response; connection closed 
+	
+	HTTP/1.0	:广泛使用
+	HTTP/1.0+	:非正式 , 加入了长连接, 虚主机 , 代理连接等内容 ..
+	HTTP/1.1	:is the curent version 
+	HTTP/2.0	:future
+	
+	
+	URI
+		URL : URLs identify resources by describing where resources are located
+			URLs : http://xxx.com/xx/xx.xx
+				Schema(How)  Host(Where)  Path(What)
+		URN : identify resources by name, regardless of where they currently reside 
+		
+	<scheme>://<user>:<password>@<host>:<port>/<path>;<params>?<query>#<frag>
+	
+	
+	
+	
+	
+	
+io  nio 
+socket
+http
+net relac
+	
+transient 
+volatile 	
+native
+socket socket socket  	
+
+
+// 最快的文件合并 : 文件分割 
+
+
+http://blog.csdn.net/dl88250/article/details/1699584
+	

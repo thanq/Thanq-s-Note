@@ -1,0 +1,60 @@
+﻿查看是否已经存在 key 
+$ cd ~/.ssh
+$ ls
+config  id_rsa  id_rsa.pub  known_hosts
+$ mkdir key_backup
+$ cp id_rsa* key_backup
+$ rm id_rsa*
+如果已经存在KEY（id_rsa, id_rsa.pub），把他们拷贝到key_backup目录备份， 因为SSH默认会使用”.ssh”目录下的KEY
+
+$ ssh-keygen -t rsa -C "your_mail_addr@gmail.com"
+Enter file in which to save the key (/home/sylvester/.ssh/id_rsa):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /home/sylvester/.ssh/id_rsa.
+Your public key has been saved in /home/sylvester/.ssh/id_rsa.pub.
+The key fingerprint is:
+e8:ae:60:8f:38:c2:98:1d:6d:84:60:8c:9e:dd:47:81 your_mail_addr@gmail.com
+
+$ ssh git@github.com
+ERROR: Hi sylvester! You've successfully authenticated, but GitHub does not provide
+shell access
+Connection to github.com closed.
+成功！！
+
+$git clone git://github.com/sylvester/meelisp.git
+
+创建Repository
+mkdir meelisp
+cd meelisp
+git init
+touch README
+git add README
+git commit -m 'first commit'
+git remote add origin git@github.com:your_name/meelisp.git
+git push origin master
+
+提交已经存在的Repository
+cd existing_git_repo
+git remote add origin git@github.com:your_name/meelisp.git
+git push origin master</div>
+
+Global setup:
+ Set up git
+  git config --global user.name "qinqiangqiang"
+  git config --global user.email thanq1@gmail.com
+        	
+Next steps:
+  mkdir Thanq-s-Note
+  cd Thanq-s-Note
+  git init
+  touch README
+  git add README
+  git commit -m 'first commit'
+  git remote add origin git@github.com:thanq/Thanq-s-Note.git
+  git push -u origin master
+      
+Existing Git Repo?
+  cd existing_git_repo
+  git remote add origin git@github.com:thanq/Thanq-s-Note.git
+  git push -u origin master

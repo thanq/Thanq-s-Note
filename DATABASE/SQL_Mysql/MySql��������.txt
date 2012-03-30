@@ -1,0 +1,52 @@
+MySql基本操作：
+mysql -uroot -p
+mysql
+create database databaseName; //
+show databases;//查看所有数据库
+drop database databaseName;
+use  test;//切换数据库
+show tables;//查看有哪些表
+
+查看版本信息：
+mysql> status
+mysql> \s
+mysql -V
+
+退出命令：
+mysql> quit
+mysql> exit
+mysql> \q
+
+清屏
+system clear   status
+
+ create database db_tarena;
+ use db_tarena;
+ show tables;
+  create table tb_user
+ ( id int primary key auto_increment,
+   name varchar(20)
+ );
+ show tables;o
+ desc tb_user;
+insert into tb_user(name)  values('zhangsan');
+select * from tb_user;
+update tb_user set name='wangwu' where id=2;
+delete from tb_user where id=2;
+
+
+
+显示表结构
+desc tb_user;
+show columns from tb_user;my
+
+显示建表语句
+show create table tb_user;
+
+执行脚本信息：
+source d:\create.sql
+
+备份脚本信息：
+mysqldump  -u root -p  db_tarena tb_user >d:\tb_user.sql
+mysqldump  -u root -p  netctoss>d:\netctoss.sql
+mysqldump  -u root -p  --all-databases>d:\alldata.sql

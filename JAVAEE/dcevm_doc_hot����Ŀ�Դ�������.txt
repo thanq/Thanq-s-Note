@@ -1,0 +1,72 @@
+﻿java 修改不用再重启服务器了  :  针对 jdk7 
+
+关于hotswap(该补丁的网址http://ssw.jku.at/dcevm/)
+
+Hotswap  是一个允许在运行状态下无限制的修改加载类文件的Java虚拟机补丁。当前java虚拟机的动态加载机制只允许修改类的方法体,而打了hotswap补丁以后，可以增加，删除类属性，方法，甚至可以改变一个类的父类。
+
+Hotswap补丁是基于GPL v2.0开源协议的。你可以通过windows，linux，mac os下载hotswap 补丁的源代码或者可执行文件。
+
+安装hotswap
+
+警告: 该补丁目前还处于试验阶段. 当该补丁用于调试java程序使用是，是相当稳定的。但我们不提倡在生产环境中使用该补丁。
+
+现在提供了 32位, 64位 Windows虚拟机, 32位 Mac OS的 (从这里获得), 和32位 Linux 虚拟机的补丁. 所有的修改基于JDK7-b102版本。
+
+安装程序
+
+·                  dcevm-0.2-win.jar (5.6 MB)
+
+·                  dcevm-0.2-mac.jar (6.0 MB)
+
+·                  dcevm-0.2-linux.jar (5.8 MB)
+
+该补丁不仅能打在java7上，且打到java 6上，也一样正常工作。
+
+在windows 启动安装程序，在控制台输入:
+> java -jar dcevm-0.2-win.jar
+
+在Mac OS启动安装程序，终端输入:
+$ sudo java -jar dcevm-0.2-mac.jar
+
+在Mac OS启动安装程序，终端输入:
+$ sudo java -jar dcevm-0.2-linux.jar
+
+安装程序会替换掉java下bin/client/jvm.dll 和bin/server/jvm.dll ，并将以后的jvm.dll备份到相应目录下。还会将dcevm.jar 加到lib/ext/ 目录.
+
+图一：hotswap补丁安装界面。
+
+执行上述命令后，就会出现图一界面，选择将要安装该补丁的java目录，单击安装就可以了。
+
+Ps:如果你的Linux没有图形界面，您可以从这里下载已经打好补丁的java。
+
+使用hotswap调试java程序
+
+1.                首先用修改后的java以debug模式启动java程序。
+
+2.                使用eclipse连接到该java进程(也可以直接在eclipse中以debug方式启动)
+
+3.                现在在eclipse 工程下面针对class文件的任何修改将会直接反映到java程序中去。
+ 
+
+清除tomcat缓存：
+
+在jsp文件头加上
+
+<meta http-equiv="Expires" content="0">
+     <meta http-equiv="kiben" content="no-cache">
+
+其中，第一行的content="0"，是表示过期的时间，如果不是0的话，就必须使用GMT的时间格式。第二行表示不用缓存机制。
+
+删除work目录下的缓存文件。
+
+conf/server.xml 文件Context path 中间加上 reloadable="true"
+
+例如：<Context path="" docBase="E:\MYJSP\" debug="0" reloadable="true" />
+
+在tomcat的startup.bat里首部加上批处理命令
+
+rd/s/q "D:\Program Files\tomcat-6.0\work\Catalina
+
+tomcat路径根据自己情况修改.
+
+这样基本可以解决缓存遗留问题。

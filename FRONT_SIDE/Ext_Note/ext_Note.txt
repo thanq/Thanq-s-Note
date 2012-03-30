@@ -1,0 +1,227 @@
+﻿ widget  可以用 new  EXT...来创建
+ 
+ 学习使用EXT 主要是EXt js 各个组建的配置属性和具体的含义
+ 
+ 所有组件都继承自EXT.Component
+ Component 的 配置属性 :
+ allowDomMove:Boolean  (true : 当渲染组件时是否允许移动节点
+ applyTo("目标id") 将组件应用到指定的对象// 相当于 el 
+ autoShow ( Boolean (false  : if is true , 在渲染时移除隐藏类型的 class 
+ cls("自定义的样式")
+ ctCls("给组件的容器添加额外的样式信息")
+ disableClass("给被禁用的组件添加额外的样式信息")
+ hideMode("组件的隐藏方式,支持的值有visibility, offsets 负偏移位置的值, dispaly(defaults) ")
+ hideParent(false) : 为 true 时 显示/隐藏 组件的容器,   false 时是本身 
+ id ("默认会自动分配一个id" ) 可以是String 
+ listener(Obj) : 给对象配置多个事件监听器,对象初始化时  , 会初始化这些监听器
+ plugins(Obj/Array ) 用于增强组件的自定义功能
+ renderTo("mixed" ) 指定要渲染到节点的 id :  之后组件的render()就不是必须的了//render : 给予,呈现
+ stateEvents(Array) 定义需要保存组件状态信息的事件,事件发生时指定的组件会她的状态(defaults : none )支持任意enent 类型
+ stateId (String default is 组件id,状态管理器用该id 来管理组件的状态信息
+ style (String Ext.Element.applyStyles 里的值 才有效;
+ xtype // 用于延迟实例化和渲染
+ 
+ // EXt 组件的状态处理
+ EXTjs 封装了一个EXT.EventObject 对象 与 w3c 标准事件对应: 支持事件处理的类继承自EXt.util.Observable
+ Ext.get("id") 得到 Ext.Element对象,可以直接调用 addListener 方法 给对象添加事件 , obj.addListener("事件名称","事件处理器, 函数")
+  //.addListener 的简写 是  .on
+  
+  关于ExtJS 中事件处理中作用域、事件处理原理、给自定义的组件添加事件、处理相关的Ext.util.Observable
+  ///
+及Ext.EventManager 类详细介绍，请参考wlr.easyjf.com 中的VIP 文档《ExtJS 中的事件处理详解》。
+
+// 使用面板:
+面板是EXtjs 控件的基础,很多高级控件都是在 面板基础上扩展的 , 应用程序的界面一般由多个面板通过不同的组织方式形成
+	面板由以下几个部分组成:
+		一个顶部工具栏,
+		一个底部工具栏,
+		面板头部,
+		面板尾部,
+		面板主区域
+		
+	面板类还内置了面板展开,关闭等功能,并提供了可重用的按钮去实现自定义行为,面板可以放入其他容器中,而且他本身就是容器
+	
+	面板类:EXT.Panel , 其xtype 为panel
+	
+	
+	TabPanel
+	ViewPort: 代表整个浏览器显示区域(body),一个页面只有 一个 ViewPort 实例: //主要用于程序的主界面
+	
+//窗口和对话框: 
+ 窗口由 Ext.Window 定义: ,该类继承自Panel, 窗口其实是一种特殊的 panel , 包含了浮动,可拖动, 可关闭,最大化, 最小化等特性:
+ 
+ 
+ 
+ EXTjs 的 布局基类为 EXT.layout.containerLayout //Container : 容器 
+ 
+	ExtJS 的
+容器组件包含一个layout 及layoutConfig 配置属性，这两个属性用来指定容器使用的布局及
+布局的详细配置信息，如果没有指定容器组件的layout 则默认会使用ContainerLayout 作为
+布局，该布局只是简单的把元素放到容器中，有的布局需要layoutConfig 配置，有的则不需
+要layoutConfig 配置。
+
+	TabPanel:card 布局: FormPanel:form 布局;GridPanel: column(柱, 直行) 布局: 
+	
+	///
+	关于ExtJS布局的详细说明，请参考wlr.easyjf.com中的VIP文档《ExtJS布局Layout详解（1）、(2)、(3)》。
+	
+	
+	// 表格由类:Ext.grid.GridPanel 定义:  xtype:grid, EXTjs 中, 表格必须包含列定义信息,并指定表格的数据存储器Store,
+	
+	表格的列信息由类 EXt.grid.ColumnModel 定义, 而表格的数据存储器由 Ext.data.Store 确定: 
+	数据存储器根据解析的数据不同分为JsonStore,SimpleStore,GroupingStore
+	
+	EditorGridePanel: 可编辑表格, 由 Ext.grid.EditorGridPanel 表示, xtype: editorgrid: 定义时,可以指定某一列可以编辑
+	
+	
+	关于ExtJS中各控件与服务器端如何交互、Ext.Ajax的详细使用说明等请参考wlr.easyjf.com中的VIP文
+档《ExtJS中客户端控件与服务器控件交互详解
+
+
+	数据存储: Stroe ;
+	// 通过stroe 的 load/reload方法 可以重新加载表格中的数据,ExtJs 中 用来定义控件中使用使用数据的API 位于Ext.dd 
+	
+	表格等控件使用的数据存放在  Record 对象中 Record 对象包含了记录中的定义信息 (那些字段,数据类型)
+	,记录具体的数据信息: (各个字段的值)
+	
+	首先使用Record 的 create 方法 创建一个记录集 MyRecord:这是一个类(这是一构造):该类包含了记录集的定义信息,
+	
+	// EidtorGridPanel : 没有实现多行: 
+	
+	Stroe；可以理解为小型的数据表,为数据存储器, 提供缓存功能: 
+	EXtjs 中：　GridPanel , ComboBox  // combo : 套餐 ,DataView 等控件要与之打交道,
+	直接通过stroe 来获取控件中需要展现的数据,
+	
+	一个Store 包含多个 Record(记录) , 又包含了数据来源, 数据解析器等相关信息, 
+
+Stroe	 通过具体的数据解析器(DataReader) 来解析指定类型/格式的数据(DataProxy),并转换成记录的形式保存在Stroe中,作为其他控件的数据输入,
+
+ 一个完整的数据存储器要知道数据源(DataProxy )  和 数据解析方式(DataReader ) 才能工作
+ Ext.data.Stroe 类中:数据源由proxy 配置属性定义, 解析器 由 reader 配置属性来定
+ 
+ 
+ // DataReader : 
+ DataReader : 标示数据读取器, (数据的解析器, 负责把服务器OR内存数组,获取的杂乱信息转换成EXtjs 
+ 中记录集 Record 对象 ) , 并存储到Stroe 里的记录数组中 .
+ 
+ 
+ ArrayReader: Ext.data.ArrayReader({},MyRecord)//读取二维数组:
+ 
+ 
+ 
+ var MyRecord = Ext.data.Record.create([
+{name: 'title'},
+{name: 'username', mapping: 'author'},
+{name: 'loginTimes', type: 'int'}
+]);
+
+var myReader = new Ext.data.JsonReader({
+totalProperty: "results",
+root: "rows",
+id: "id"
+}, MyRecord);
+
+可以解析下面的数据格式:
+{"results":2,"rows":{id:1,"测试:"author"}}
+
+   
+
+
+	
+	DataProxy 与  自定义 Stroe : 
+	数据代理: 可以理解为数据源: 即从那得到, 或 如何得到需要交给 DadaReader 解析的数据 
+	基类: Ext.data.DataProxy 定义: 
+	
+	Ext.data.MemoryProxy : 从客户端内存读取数据, 
+	Ext.data.HttpProxy: ajax 读取服务器端的数据 , 
+	Ext.data.ScriptTagProxy : 跨域读取
+	
+	关于DataProxy 的更多内容，请参考http://wlr.easyjf.com 的VIP 文档中的《ExtJS 数据
+存储Store 详解》中的相关内容。
+
+	TreePanel 基本使用: 
+	
+	
+	TreeLoader: 类加载器:由Ext.tree.TreeLoader 定义: 只有AsyncTreeNode 才会使用 TreeLoader 
+	// 针对 Node
+	var root=new Ext.tree.AsyncTreeNode({id:"root",text:"根节点",loader:loader});
+	
+	
+	
+	//看下上面的文档: 学英语 : 写EXT 的工具包, : 常用的东西要不看能写 
+	
+	
+	
+	// FromPanel
+	:Ext.get():每次都用自己的接口去封装一个独立对象,方便重用,
+		.fly():每次创建的对象共用内存中的一套接口: 适合只调用一次的对象
+	
+	
+	
+	
+	Ext.apply(目标对象, 源对象,  (可选:给目标对象默认值)) // 覆盖目标对象中的属性/
+	// 都是给出的 object
+	Ext.applyIf(同上) // 只覆盖源对象中有,而目标对象中没有的
+	
+	
+	
+	
+	可以使用 Ext.getBody() : 来得到 body 的 引用
+	
+	圆角框 会包含 按钮栏, 适合 formPanel
+	
+HQL 中 Date 的 比较 : 
+
+String hql = "from TradeRecord as tr where tr.TradeTime>= :startTime "
++ "and tr.TradeTime <= :endTime and tr.CustomerId =:cid";
+String[] params = { "startTime", "endTime", "cid" };
+Object[] args = { startTime, endTime, new Long(cid) };
+List list = this.getHibernateTemplate().findByNamedParam(hql, params, args);
+startTime,endTime,cid是这个方法的参数
+
+	/**
+     * 获取现在时间
+     *
+     * @return 返回时间类型 yyyy-MM-dd HH:mm:ss
+     */ 
+	 
+     public static java.sql.Timestamp getNowSqlDate() {
+     Date currentTime = new Date();
+     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+     String dateString = formatter.format(currentTime);
+     java.sql.Timestamp currentTime_2 = java.sql.Timestamp.valueOf(dateString);
+     return currentTime_2;
+     }
+
+返回24时制当前时间yyyy-MM-dd HH:mm:ss 如果yyyy-MM-dd hh:mm:ss则返回12时制的当前时间
+
+hql代码
+
+Map filterMap1=new HashMap();         
+filterMap1.put("kcjyid", kcjy.getId().toString());
+filterMap1.put("nowtime", DateUtil.getNowSqlDate());
+
+Collection<Object> teachksaplist=(Collection<Object>) serviceFactory.getAdminService().
+	list1(
+		"from Ksap as b 
+		 where b.kcjyId=:kcjyid 
+		 and b.ksend <:nowtime 
+		 order by b.ksend ",
+			page, 1, filterMap1);
+
+ksend 为Ksap 实体中的属性类型为Date 	
+
+
+
+
+
+
+grid  handler ( value  , v1, v2 )  // v2.date.~ :  : 取得当前列的值 , //对应 record :  
+
+
+No1 : checkStates_id   3 | status	false
+
+No2 : checkStates_id    | status	true
+
+
+

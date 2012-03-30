@@ -1,0 +1,30 @@
+汇编语言 :　将　机器码　中一组一组的数字　用助记符　Mnemonics　表示
+汇编器通过查表 将 Mnemonics 替换掉
+compile
+portable
+interpret
+ 
+sh 注释 :  #!
+
+Structure 
+syntax
+grammer 
+token
+lexical 
+
+
+mnemonics
+mnemonics
+mnemonics
+mnemonics
+mnemonics
+mnemonics
+mnemonics
+mnemonics
+mnemonics
+mnemonics
+mnemonics
+mnemonics
+mnemonics
+mnemonics
+mnemonics

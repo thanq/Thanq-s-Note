@@ -1,0 +1,16 @@
+D:\mongodb\bin>mongod --dbpath d:/mongodb
+
+D:\mongodb\bin>mongo
+MongoDB shell version: 1.8.1
+connecting to: test
+> show dbs
+admin   (empty)
+local   (empty)
+> use qqq
+switched to db qqq
+> db.users.save({usernamme:"man"})
+> ;
+> show dbs
+admin   (empty)
+local   (empty)
+qqq     0.03125GB
