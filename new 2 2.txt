@@ -18,15 +18,12 @@ Hibernate：
  
 MyBatis：
 ž   优缺点 -- 
-ž   # 和 $ 的区别 -- 
 ž   和hibernate对比 --
 ž   和 spring 的整合 --
 
 事务控制肿么办
 
 PV 源语 标示 ...
- 
- 
  
 框架以外的
 ž   Java 常用通信手段，
