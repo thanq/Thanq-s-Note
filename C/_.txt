@@ -6,25 +6,3 @@ interpret
  
 sh ×¢ÊÍ :  #!
 
-Structure 
-syntax
-grammer 
-token
-lexical 
-
-
-mnemonics
-mnemonics
-mnemonics
-mnemonics
-mnemonics
-mnemonics
-mnemonics
-mnemonics
-mnemonics
-mnemonics
-mnemonics
-mnemonics
-mnemonics
-mnemonics
-mnemonics

@@ -1,3 +1,66 @@
+select 
+    a.orgnam abbr ,
+	a.code ,
+	a.name,
+	a.codeseq,
+	a.nimlvl,
+	RANK() OVER(PARTITION BY a.PCODE ,a.abbr  ORDER BY a.CODESEQ) as SORT ,
+	isnull(b.REST,0)*power(10.0000,4-?) REST1,--@llUnit
+	isnull(b.CURDAYREST,0)*power(10.0000,4-?) CURDAYREST1,
+	isnull(b.INTERESTINEXP,0)*power(10.0000,4-?) INTERESTINEXP1,
+	isnull(b.INPAYRATE,0) INPAYRATE1,
+	isnull(c.REST,0)*power(10.0000,4-?) REST2,
+    isnull(c.CURDAYREST,0)*power(10.0000,4-?) CURDAYREST2,
+	isnull(c.INTERESTINEXP,0)*power(10.0000,4-?) INTERESTINEXP2,-- @llUnit*6
+	isnull(c.INPAYRATE,0) INPAYRATE2,
+	datediff(day, (substring(?,1,4)+'0101'),?)+1 aa ,--@llDate*2
+	datediff(day, (substring(?,1,4)+'0101'),?)+1 bb --@frqDate *2
+from ( 
+	select 
+            orgnam ,orgcod ,code ,name, codeseq, nimlvl ,pcode,abbr
+	from NIM_CALIBER_TAB ,(
+		select orgnam,orgcod,abbr from CM_ORG  c 
+			where  
+				( ( '0'= ? and c.ORGCOD= ?) or ( '1'= ?  and c.PORGCOD = ?  ) ) and c.BEGDATE<= ? and c.ENDDATE>= ?
+				-- ? @underLvl , @org , @underLvl , @org , llDate ,llDate 
+	) t
+) a  left join 
+        (
+			select rest,CURDAYREST,INTERESTINEXP,INPAYRATE ,NIMCODE ,org  from NIM_MIDDLE_TAB where    CCY='90' and TRTAG='9' and DTE='20110930' and FRQ='MM' 
+			--? @ccy , @trtag , @llDate , @frq 
+		)b  on  b.NIMCODE=a.CODE and b.ORG= a.orgcod
+left join  (
+			select rest,CURDAYREST,INTERESTINEXP,INPAYRATE  ,NIMCODE ,org  from NIM_MIDDLE_TAB where    CCY='90' and TRTAG='9' and DTE='20110831' and FRQ='MM' 
+			--? @ccy , @trtag , @frqDate , @frq 
+		)c  on  c.NIMCODE=a.CODE and c.ORG= a.orgcod
+order by a.CODESEQ 
+
+
+select t1.CODE,t1.NAME,t1.CODESEQ,t1.NIMLVL,t1.REST*power(10.0000,4-?) REST1,t1.CURDAYREST*power(10.0000,4-?) CURDAYREST1,
+t1.INTERESTINEXP*power(10.0000,4-?) INTERESTINEXP1,t1.INPAYRATE INPAYRATE1,
+t2.REST*power(10.0000,4-?) REST2,t2.CURDAYREST*power(10.0000,4-?) CURDAYREST2,
+t2.INTERESTINEXP*power(10.0000,4-?) INTERESTINEXP2,t2.INPAYRATE INPAYRATE2,t1.SORT,
+datediff(day, (substring(?,1,4)+'0101'),?)+1 aa ,datediff(day, (substring(?,1,4)+'0101'),?)+1 bb
+from (select isnull(a.ORG,?) ORG,isnull(a.CCY,?) CCY,isnull(a.TRTAG,?) TRTAG,isnull(a.FRQ,?) FRQ,isnull(a.NIMCODE,b.CODE) NIMCODE,b.CODE,b.NAME,b.CODESEQ,b.NIMLVL,isnull(a.REST,0) REST,isnull(a.CURDAYREST,0) CURDAYREST,isnull(a.INTERESTINEXP,0) INTERESTINEXP,isnull(a.INPAYRATE,0) INPAYRATE,
+                 RANK() OVER(PARTITION BY b.PCODE ORDER BY b.CODESEQ) as SORT from NIM_CALIBER_TAB b left join 
+                 (select * from NIM_MIDDLE_TAB where ORG=? and CCY=? and TRTAG=? and DTE=? and FRQ=? ) a
+on a.NIMCODE=b.CODE ) t1
+    left join (select isnull(c.ORG,?) ORG,isnull(c.CCY,?) CCY,isnull(c.TRTAG,?) TRTAG,isnull(c.FRQ,?) FRQ,isnull(c.NIMCODE,d.CODE) NIMCODE,isnull(c.REST,0) REST,isnull(c.CURDAYREST,0) CURDAYREST,isnull(c.INTERESTINEXP,0) INTERESTINEXP,isnull(c.INPAYRATE,0) INPAYRATE 
+    from NIM_CALIBER_TAB d left join (select * from NIM_MIDDLE_TAB where ORG=? and CCY=? and TRTAG=? and DTE=? and FRQ=? )c 
+    on c.NIMCODE=d.CODE
+    ) t2 
+    on t1.ORG=t2.ORG and t1.CCY=t2.CCY and t1.TRTAG=t2.TRTAG and t1.FRQ=t2.FRQ and t1.NIMCODE=t2.NIMCODE  
+order by t1.CODESEQ
+
+
+
+
+
+
+
+
+
+
 
 -- MySQL 5.0.*
 --
@@ -85,3 +148,26 @@ Learn:
      Copyright 2006 O'Reilly Media, Inc.
 
 --EOF--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
