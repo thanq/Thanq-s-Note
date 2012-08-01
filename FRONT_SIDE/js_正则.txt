@@ -1,0 +1,48 @@
+﻿var str="aaa4444aaaaaa55555-aaaaaa666666aaaa51515aaa"
+var reg=/(\d{4，6})(?!\-)/ig
+alert(str.match(reg))
+
+通过零宽断言(?!\-)来匹配所有后面不接“-”的4到6位数字。
+发现一个问题，这样他不会剔除55555而是匹配出了5555,
+请问如何让其返回为：4444,666666,51515。而不要把55555也返回了
+请各位老师帮忙！谢谢
+
+var reg=/(\d{4,6})(?!\d*-)/ig;
+
+/.jpg$|.gif$/i
+
+
+贴出来与大家共勉。
+
+先看一段代码，
+<script>
+var objReg = /^[a-zA-Z]{1}(:){1}$/gi;
+alert(objReg.test("a:"));//返回true
+alert(objReg.test("a:"));//返回false
+</script>
+
+为什么第二个test会返回false?是不是觉得奇怪。
+原因我解答如下：
+test实际上与exec方法的执行方法是一致的，只是返回值不一样。test返回的是true or false（如果exec返回的不是null），exec返回的是pattern(匹配)。
+而exec的执行过程为：带有g参数时，下次匹配时，自动会跳到lastIndex后的位置，也就是这里的第2个位置。而这个位置与pattern显然不匹配。因此返回false。
+
+解决方法：
+(1)
+可以不使用g(全局参数)也就是这样-
+<script>
+var objReg = /^[a-zA-Z]{1}(:){1}$/i;
+alert(objReg.test("a:"));//返回true
+alert(objReg.test("a:"));//返回true
+</script>
+
+(2)
+可以用lastIndex=0来还原-
+var objReg = /^[a-zA-Z]{1}(:){1}$/gi;
+alert(objReg.test("a:"));//返回true
+objReg.lastIndex=0;
+alert(objReg.test("a:"));//返回true 
+
+
+
+
+

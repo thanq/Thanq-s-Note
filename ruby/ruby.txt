@@ -1,0 +1,47 @@
+使用 end 关键字来结束class等的定义 而不是}
+
+require 关键字替代 import 关键字 
+
+所有的成员变量都是私有的, 在外部得通过方法调用 
+
+方法调用时 () 居然可以不要 
+
+一切都是对象 , 包括 1, 2.1 这样的
+
+没有静态类型 校验 
+
+变量名只是标签 而且没有具体的类型和他们绑定
+
+木有类型声明 只是让变量出现 , liek : a = [1,2]
+	而不是 : int[] a = {1,2}
+
+没有方法的重载  
+
+foo = Foo.new("hi") , 而不是 Foo foo = new Foo("hi");
+
+构造方法叫  initialize  , 而不是 与类名相同
+
+mixin 代替 interfaces
+ 
+YAML
+
+nil 替代 null
+
+== 的作用是是否在ruby中等值 ,  像是java中的 equals
+
+equal?() 来判断两个对象是不是同一个对象 , 像是 java 中的 == 
+
+__FILE__ == $0 
+	如果当前的脚本是启始脚本 
+
+class Greeter 
+	def initialize (name = "define" ) 
+		@name = name #定义实例变量 
+		# 该类中的所有方法 都可以使用 @name 引用到
+	end
+end
+
+
+gem在windows下使用代理 : set HTTP_PROXY=...:..
+
+

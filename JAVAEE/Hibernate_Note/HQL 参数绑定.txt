@@ -1,0 +1,72 @@
+HQL 参数绑定
+	:JDBC 中 :
+		PrepareStatement pre=connection.prepare(“select * from User where user.name=?”);
+	　　pre.setString(1,”zhaoxin”);
+	　　ResultSet rs=pre.executeQuery();
+	:如果在 hibernate 中 调用 JDBC: 
+		trans = session.beginTransaction();
+		Connection conn = session.connection();
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.executeUpdate();
+		stmt.execute();
+		trans.commit();
+	
+	
+	hibernate 中:
+	A):按照参数名称绑定:// 可以级联的去写 
+		Query query = session.createQuery("from User u where u.name = :userName");
+		query.setString("userName","秦强强");//("命名参数名称",命名参数实际的值)
+		// :userName 定义了命名参数,相当于  u.name=?, 然后设置 ? 的值 // 
+		
+	B):按照参数位置绑定: // 不提倡 可读性差
+		Query query=session.createQuery(“from User user where user.name=? and user.age =? ”);
+	　　query.setString(0,name);//按照 ? 的 位置设置实际的参数
+	　　query.setInteger(1,age);
+	
+	C):setParameter() 方法://可以绑定任意类型的参数 //推荐
+		String hql=”from User user where user.name=:userName ”;
+　　	Query query=session.createQuery(hql);
+　　	query.setParameter(“customername”,name,Hibernate.STRING);
+		//命名参数名称, 命名参数实际值, 命名参数映射类型 ,
+		//对于一些基本类型, hibernate 可以猜测出参数映射类型, 但是Date类型不可以,
+		//应为它会对应hibernate的多种映射类型, 像是 Hibernate.DATE, Hibernate.TIMESTAMP
+		
+	D):setProperties() {注意 ies 复数 }方法: //setEntity();将命名参数的值和一个对象的属性值绑定
+		Customer customer=new Customer();
+	　　customer.setName(“pansl”);
+	　　customer.setAge(80);
+	　　Query query=session.createQuery(“from Customer c where c.name=:name and c.age=:age ”);
+	　　query.setProperties(customer);
+	　　setProperties()方法会自动将customer对象实例的属性值匹配到命名参数上，但是要求命名参数名称必须要与实体对象相应的属性同名。
+	　　这里还有一个特殊的setEntity()方法，它会把命名参数与一个持久化对象相关联，如下面代码所示：
+	　　Customer customer=(Customer)session.load(Customer.class,”1”);
+	　　Query query=session.createQuery(“from Order order where order.customer=:customer ”);
+	　　query. setEntity(“customer”,customer);
+	　　List list=query.list();
+	　　上面的代码会生成类似如下的SQL语句：
+	　　Select * from order where customer_ID=’1’;
+	
+    E):参数绑定的好处;
+		1:用好有可读性;
+		2:对于语法相同,参数不同的 sql 语句, 可以利用预编译的sql语句缓存,提高性能;
+		3:会将 单引号 ? 解析?? 
+		
+		
+		
+		SQL Injection是一种专门针对SQL语句拼装的攻击方式，比如对于我们常见的用户登录,
+		在登录界面上，用户输入用户名和口令，这时登录验证程序可能会生成如下的HQL语句：
+	　　“from User user where user.name=’”+name+”’ and user.password=’”+password+”’ ”
+	　　这个HQL语句从逻辑上来说是没有任何问题的，这个登录验证功能在一般情况下也是会正确完成的，
+		但是如果在登录时在用户名中输入”zhaoxin or ‘x’=’x”,这时如果使用简单的HQL语句的字符串拼装，
+		就会生成如下的HQL语句：
+	　　“from User user where user.name=’zhaoxin’ or ‘x’=’x’ and user.password=’admin’ ”;
+	　　显然这条HQL语句的where字句将会永远为真，而使用户口令的作用失去意义，这就是SQL Injection攻击的基本原理。
+
+	　　而使用绑定参数方式，就可以妥善处理这问题,当使用绑定参数时，会得到下面的HQL语句：
+	　　from User user where user.name=’’zhaoxin’’ or ‘’x=’’x’’ ‘ and user.password=’admin’;
+		由此可见使用绑定参数会将用户名中输入的单引号解析成字符串（如果想在字符串中包含单引号
+		，应使用重复单引号形式），所以参数绑定能够有效防止SQL Injection安全漏洞。
+		
+	
+		
+		

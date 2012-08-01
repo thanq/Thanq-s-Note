@@ -1,0 +1,24 @@
+1 使用有意义的标签
+	ul ol dl 
+	strong em
+	blockquote cite 
+	abbr acronym code
+	fieldset legend label
+	caption thead tbody tfoot 
+	
+浏览器模式:
+	标准模式 & 怪癖模式 quirks model
+	在怪癖模式中 , 浏览器常以向后兼容的/老浏览器的解析方式
+	
+	meyerweb.com/eric/dom/dtype/dtype-grid.html
+	
+选择器 
+		#nav > li /*直接子代*/
+		h1 + p /*顶级标题后面(紧跟着的?)第一个段落*/
+		
+position :
+	相对定位, 相对于块原来的位置 
+absolute :
+	相对于最近的已经定位的祖先元素 , 将脱离标准流
+
+如果不加 <div.clear>  容器是不包围浮动元素的 

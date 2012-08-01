@@ -1,0 +1,20 @@
+    CREATE   TABLE  `proctab` (  
+    `id`  int ( 11 )  NOT   NULL   auto_increment  ,  
+    `Name`  varchar ( 20 ),  
+    `age`  int ( 11 ),  
+    PRIMARY   KEY   (`id`)  
+    )  
+	
+	 create   PROCEDURE  proc()  
+     begin  
+        select   *   from  proctab;  
+     end ;   
+	 
+	SQLQuery query = session.createSQLQuery("{Call proc(?)}");  
+    query.setString(0, ²ÎÊý);  
+    List list =query.list();  
+	----------------------------------------------------------
+	DB2:
+	----------------------------------------------------------
+
+	

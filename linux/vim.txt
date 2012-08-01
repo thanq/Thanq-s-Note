@@ -1,0 +1,52 @@
+ctrl + r : redo 
+u : undo 
+U : undo 撤销在一行中的所有改动
+d  [NUM] (d|w|e)
+p : paste 
+r : replace 
+c :  [NUM](d|w|e|$)
+
+[NUM] shift + G
+ctrl + g 
+/ : 正方向搜索 n 下一个 ,  N 上一个
+? : 反方向搜索
+
+% : 匹配括号
+
+:/thee/the  改变光标所在行的第一个匹配 , 
+:/thee/the/g 所在行的所有匹配
+:#,#s/old/new/g 替换#-#行的所有匹配 
+:%s/old/new/g 替换  全篇
+
+:! 执行外部命令
+
+r
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ctrl + r  , u 
+
+p (w , e , r ) 
+

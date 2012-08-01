@@ -1,0 +1,40 @@
+﻿ASCII : 单字节编码 ,  可以表示 128 个字符  , 0 - 31  为 控制字符 , 其他为可打印字符
+
+iso-8859-1 : 单字节编码 ,  可以表示 256 个字符 
+
+GB2312 : 如果查到的码值  >  0xFF  
+
+Unicode -- Universal Code 统一码 ISO创建的超语言字典 , 世界上所有的语言都可以通过本字典来相互翻译
+	UTF-16 和 UTF-8 是 Unicode 在计算机中的存储形式 
+	
+UTF-16 : 双字节编码 , char 在内存中的表示形式 
+
+UTF-8 : 变长编码 1-6 个字符 
+	一个byte 最高位为 0 , 那么它是 ASCII 码
+	如果一个 byte 以 11开头 , 那么连续的1表示这个字符的字节数 , 一个字符最多6个字节
+	如果一个 byte 以 10开头 , 那么它不是当前字符的首字节 , 需要向前查找才可以查到当前字符的首字节
+		UTF-8 编码中文字符时不需要查表 , 效率比 GBK系列 要高
+		
+
+* 浏览器编码 URL 的规范 :
+	将非 ASCII 字符通过某种编码方式 编码为16进制字符 , 然后前面加上 '%' E5%90%9B%
+	
+	
+ * POST 表单的编解码 : 1 浏览器按照http header 中的Content-Type 对表单内容进行编码 
+ * 
+ * 浏览器对HTML的解码 : 1 按照http header 中的 Content-Type ;
+ * 					2 如果没有 Content-Type 按照 <meta HTTP-equiv="Content-T ype"content="text/html; charset=GBK" /> 中的设置
+ * 					3 还没有的话 按照默认设置 
+ * 
+ * JDBC ：url="jdbc:mysql://localhost:3306/DB?useUnicode=true&characterEncoding=GBK"。
+ * 
+ * 当一个汉字字符 -> 两个乱码字符 :
+ * 		淘(char[1]:6bb8 -GBK编码->(byte[2]:cc d4)-ISO_8859_1解码->ÌÔ(char[2]:cc d4)
+ * 当一个汉字字符 -> 一个?
+ * 		淘(char[1]:6bb8)-ISO_8859_1编码->(byte[1]:3f)-ISO_8859_1解码->?(char[1]:3f)
+ * 当一个汉字字符 -> 两个?
+ * 		淘(char[1]:6bb8)-GBK编码->(byte[2]:cc d4)-ISO_8859_1解码->ÌÔ(char[2]:cc d4)-GBK编码->(byte[2]3f 3f)-GBK解码->??(char[2]3f 3f)
+ * 
+ *  为什么 request.getParameter() 为乱码 , 而 String(request.getParameter().getBytes("ISO-8859-1"),"GBK") 就正常了?
+ *  	因为  useBodyEncodingForURI 配置项没有设置为”true”，从而第一次解码使用 ISO-8859-1 来解析 从而造成乱码
+ *  	淘(char[1]:6bb8)-GBK编码->(byte[2]:cc d4)-ISO_8859_1解码->ÌÔ(char[2]:cc d4)-ISO_8859_1编码->(byte[2]cc d4)-GBK解码->淘(char[1]:6bb8)

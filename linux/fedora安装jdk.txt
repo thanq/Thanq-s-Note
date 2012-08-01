@@ -1,0 +1,33 @@
+JDK1.6发布了，今天试着安装了。由于系统里自带和默认使用的 Java虚拟机 是GCJ，所以安装SUN JDK的时候需要进行一些设置。
+
+1.下载安装包 jdk-6-linux-i586-rpm.bin
+
+2. 更改权限 #chmod 777 jdk-6-linux-i586-rpm.bin
+
+解压 # ./jdk-6-linux-i586-rpm.bin
+
+解压出rpm包 jdk-6-linux-i586-rpm
+
+3. 安装 ＃rpm -ivh jdk-6-linux-i586-rpm
+
+默认安装在/usr/java/jdk1.6.0
+
+4.创建链接代替默认的GCJ
+
+#cd /usr/bin
+
+#ln -s -f /usr/java/jdk1.6.0/jre/bin/java
+
+#ln -s -f /usr/java/jdk1.6.0/bin/javac
+
+5.修改.bashrc文件
+
+加入下面4行
+
+export JAVA_HOME=/usr/java/jdk1.6.0
+
+export JAVA_BIN=/usr/java/jdk1.6.0/bin
+
+export PATH=$PATH:$JAVA_HOME/bin
+
+export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar 
